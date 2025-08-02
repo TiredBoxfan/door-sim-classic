@@ -4,7 +4,7 @@ const inputDiv = document.getElementById("input-line") as HTMLElement | null;
 const inputField = document.getElementById("input") as HTMLInputElement | null;
 const bottomTolerance = 10;
 
-export let inputEnabled = false;  // If inputs are currently being accepted.
+export let inputEnabled = false; // If inputs are currently being accepted.
 
 /**
  * Sets the text color of the on screen terminal.
@@ -31,7 +31,7 @@ export function enableInput(): void {
     const atBottom = scrollAtBottom();
     if (inputDiv) inputDiv.style.display = "flex";
     if (inputField) {
-        inputField.value = "";  // clear lingering text.
+        inputField.value = ""; // clear lingering text.
         inputField.focus({ preventScroll: true });
     }
     if (atBottom) scrollToBottom();
@@ -42,7 +42,7 @@ export function enableInput(): void {
  */
 export function scrollAtBottom(): boolean {
     if (!terminal) return false;
-    return (terminal.scrollHeight - terminal.scrollTop - terminal.clientHeight) <= bottomTolerance;
+    return terminal.scrollHeight - terminal.scrollTop - terminal.clientHeight <= bottomTolerance;
 }
 
 /**
@@ -73,7 +73,7 @@ export async function write(msg: string, typewrite: boolean = false): Promise<vo
     const text = msg.replace(/\n/g, "<br>") + "<br>";
     let atBottom = scrollAtBottom();
     let timeout;
-    
+
     return new Promise((resolve) => {
         if (!typewrite) {
             output.innerHTML += text;
@@ -90,7 +90,7 @@ export async function write(msg: string, typewrite: boolean = false): Promise<vo
             }
             timeout = 100;
             const char = text[i];
-            switch(char) {
+            switch (char) {
                 case "<":
                     const endTag = text.indexOf(">", i);
                     if (endTag !== -1) {
@@ -100,7 +100,7 @@ export async function write(msg: string, typewrite: boolean = false): Promise<vo
                         out.innerHTML += char;
                     }
                     break;
-                case "1":  // "zero-width space" for pause
+                case "1": // "zero-width space" for pause
                     timeout = 50;
                     break;
                 default:
