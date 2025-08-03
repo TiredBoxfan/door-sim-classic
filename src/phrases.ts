@@ -1,23 +1,11 @@
 // Direct translation of Lexi Rose's Phrases.h from C++ to TypeScript.
 
-import { write } from "./terminal";
+import { write } from "./terminal.js";
 
 //Phrases.h
 //A header file to contain all of the text from the game.
 //The goal of course being to not clutter the main file.
 //Functions should be in alphabetacal order
-
-//Changing strings
-let DoorState: string =
-    "The door is currently in a 'closed' state.\nYou contemplate what could be behind it.";
-
-let Floorstate: string =
-    "The floor is cold and unforgiving, \nholding battlescars from the many who have walked across it.";
-
-let LookAtValue: string =
-    "You are in a small room, there is a door in front of you.\nThe door is a standard 'pull to open' model featuring a rotatable knob.\nThere is a light above you though no apparent way to turn it on or off.\n";
-
-let status: string = "You are a sturdy creature fond of drink and industry.";
 
 //Functions
 
