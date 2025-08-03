@@ -36,7 +36,6 @@ let LookAtValue: string =
 
 let PlayerStatus: string = "You are a sturdy creature fond of drink and industry.";
 
-
 //Every command should work
 
 /*
@@ -52,7 +51,6 @@ let PlayerStatus: string = "You are a sturdy creature fond of drink and industry
 
 */
 async function main(): Promise<number> {
-
     let gamestyle: number = 0;
     let gamebeaten: boolean = false;
     let subtitle: string = "A Tale of One Door";

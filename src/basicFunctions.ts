@@ -25,12 +25,50 @@ export function delay(ms: number): Promise<void> {
  */
 export function getch(): Promise<void> {
     return new Promise((resolve) => {
-        const handler = () => {
-            window.removeEventListener("keydown", handler);
+        const sensitivity = 10; // in px
+        let startX = 0;
+        let startY = 0;
+        let isTap = true;
+        let pointerid = -1;
+
+        const cleanup = () => {
+            window.removeEventListener("keydown", keyHandler);
+            window.removeEventListener("pointerdown", downHandler);
+            window.removeEventListener("pointerup", upHandler);
+            window.removeEventListener("pointermove", moveHandler);
             // Brief timeout to prevent typing in input field.
             setTimeout(resolve, 1);
         };
-        window.addEventListener("keydown", handler);
+
+        const keyHandler = () => {
+            cleanup();
+        };
+
+        const downHandler = (e: PointerEvent) => {
+            if (!e.isPrimary) return;
+            startX = e.clientX;
+            startY = e.clientY;
+            isTap = true;
+            pointerid = e.pointerId;
+        };
+
+        const upHandler = (e: PointerEvent) => {
+            if (e.pointerId != pointerid) return;
+            if (isTap) cleanup();
+        };
+
+        const moveHandler = (e: PointerEvent) => {
+            if (e.pointerId != pointerid) return;
+            const diffX = e.clientX - startX;
+            const diffY = e.clientY - startY;
+            const dist = Math.sqrt(diffX * diffX + diffY * diffY);
+            if (dist > sensitivity) isTap = false;
+        };
+
+        window.addEventListener("keydown", keyHandler);
+        window.addEventListener("pointerdown", downHandler);
+        window.addEventListener("pointerup", upHandler);
+        window.addEventListener("pointermove", moveHandler);
     });
 }
 
