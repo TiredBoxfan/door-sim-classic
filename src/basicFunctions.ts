@@ -5,7 +5,6 @@ import { enableInput, write } from "./terminal.js";
 const inputDiv = document.getElementById("input-line") as HTMLElement | null;
 const inputField = document.getElementById("input") as HTMLInputElement | null;
 
-
 //Minor functions for Door Simulator+ Project
 
 export let userInput: string = "";
@@ -28,8 +27,8 @@ export function getch(): Promise<void> {
     return new Promise((resolve) => {
         const handler = () => {
             window.removeEventListener("keydown", handler);
-            if(inputField) inputField.value = "";
-            resolve();
+            // Brief timeout to prevent typing in input field.
+            setTimeout(resolve, 1);
         };
         window.addEventListener("keydown", handler);
     });
@@ -56,9 +55,8 @@ export async function stringOut(text: string) {
 }
 
 //Prompts the users for an input
-export async function gameprompt(): Promise<void>
-{
-	enableInput();
+export async function gameprompt(): Promise<void> {
+    enableInput();
     await new Promise<void>((resolve) => {
         const handler = async (event: KeyboardEvent) => {
             if (event.key !== "Enter") return;
